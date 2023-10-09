@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer-example
+  namespace: articles
+spec:
+  selector:
+    matchLabels:
+      app: producer-example
+  replicas: 1
+  template:
+    metadata:
+      namespace: producer-example
+      labels:
+        app: producer-example
+    spec:
+      containers:
+        - name: producer-example
+          image: vertxzookeeperexample:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000
+          env:
+            - name: DEPLOYMENT_TYPE
+              value: "producer"

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-example
+  namespace: articles
+spec:
+  selector:
+    matchLabels:
+      app: consumer-example
+  replicas: 1
+  template:
+    metadata:
+      namespace: consumer-example
+      labels:
+        app: consumer-example
+    spec:
+      containers:
+        - name: consumer-example
+          image: vertxzookeeperexample:v1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000
+          env:
+            - name: DEPLOYMENT_TYPE
+              value: "consumer"
